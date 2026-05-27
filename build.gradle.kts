@@ -45,6 +45,9 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger:2.3.12")
     implementation("io.ktor:ktor-server-openapi:2.3.12")
 
+    // Firebase
+    implementation("com.google.firebase:firebase-admin:9.3.0")
+
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
 }
