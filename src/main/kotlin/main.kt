@@ -5,6 +5,7 @@ import com.rashidyusubov.musicserver.data.database.DatabaseSeeder
 import com.rashidyusubov.musicserver.plugins.configureMonitoring
 import com.rashidyusubov.musicserver.plugins.configureRouting
 import com.rashidyusubov.musicserver.plugins.configureSerialization
+import com.rashidyusubov.musicserver.utils.FirebaseFactory
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -14,6 +15,7 @@ fun main(args: Array<String>) {
 fun Application.module() {
     DatabaseFactory.init()
     DatabaseSeeder.seed()
+    FirebaseFactory.init()
     configureMonitoring()
     configureSerialization()
     configureRouting()
