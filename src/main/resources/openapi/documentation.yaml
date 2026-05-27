@@ -1,0 +1,57 @@
+openapi: 3.0.3
+
+info:
+  title: Music Server API
+  version: 1.0.0
+  description: REST API for music mobile application
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+
+  /tracks:
+
+    get:
+      summary: Get all tracks
+
+      responses:
+        '200':
+          description: List of tracks
+
+  /tracks/{id}:
+
+    get:
+      summary: Get track by id
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Track found
+
+        '404':
+          description: Track not found
+
+  /tracks/search:
+
+    get:
+      summary: Search tracks
+
+      parameters:
+        - name: query
+          in: query
+          required: true
+
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Search results
