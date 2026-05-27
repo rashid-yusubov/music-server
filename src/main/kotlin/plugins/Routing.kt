@@ -2,6 +2,7 @@ package com.rashidyusubov.musicserver.plugins
 
 import com.rashidyusubov.musicserver.presentation.routes.authRoutes
 import com.rashidyusubov.musicserver.presentation.routes.favoritesRoutes
+import com.rashidyusubov.musicserver.presentation.routes.playlistsRoutes
 import com.rashidyusubov.musicserver.presentation.routes.tracksRoutes
 import io.ktor.server.application.*
 import io.ktor.server.plugins.swagger.*
@@ -21,5 +22,7 @@ fun Application.configureRouting() {
         authRoutes()
 
         favoritesRoutes()
+
+        playlistsRoutes()
     }
 }
