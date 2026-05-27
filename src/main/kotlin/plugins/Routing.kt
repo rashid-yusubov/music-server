@@ -1,6 +1,7 @@
 package com.rashidyusubov.musicserver.plugins
 
 import com.rashidyusubov.musicserver.presentation.routes.albumsRoutes
+import com.rashidyusubov.musicserver.presentation.routes.artistsRoutes
 import com.rashidyusubov.musicserver.presentation.routes.authRoutes
 import com.rashidyusubov.musicserver.presentation.routes.favoritesRoutes
 import com.rashidyusubov.musicserver.presentation.routes.playlistsRoutes
@@ -21,6 +22,8 @@ fun Application.configureRouting() {
         tracksRoutes()
 
         albumsRoutes()
+
+        artistsRoutes()
 
         authRoutes()
 
