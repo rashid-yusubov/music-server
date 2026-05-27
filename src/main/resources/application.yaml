@@ -3,5 +3,4 @@ ktor:
     port: 8080
   application:
     modules:
-      - com.rashidyusubov.musicserver.SerializationKt.configureSerialization
-      - com.rashidyusubov.musicserver.RoutingKt.configureRouting
+      - com.rashidyusubov.musicserver.MainKt.module
