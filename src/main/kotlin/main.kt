@@ -5,6 +5,7 @@ import com.rashidyusubov.musicserver.data.database.DatabaseSeeder
 import com.rashidyusubov.musicserver.plugins.configureMonitoring
 import com.rashidyusubov.musicserver.plugins.configureRouting
 import com.rashidyusubov.musicserver.plugins.configureSerialization
+import com.rashidyusubov.musicserver.plugins.configureStatusPages
 import com.rashidyusubov.musicserver.utils.FirebaseFactory
 import io.ktor.server.application.*
 
@@ -18,5 +19,6 @@ fun Application.module() {
     FirebaseFactory.init()
     configureMonitoring()
     configureSerialization()
+    configureStatusPages()
     configureRouting()
 }

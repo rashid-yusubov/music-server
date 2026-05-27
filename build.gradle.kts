@@ -48,6 +48,9 @@ dependencies {
     // Firebase
     implementation("com.google.firebase:firebase-admin:9.3.0")
 
+    // Status Page
+    implementation("io.ktor:ktor-server-status-pages:3.5.0")
+
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
 }
