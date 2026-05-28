@@ -18,11 +18,15 @@ object DatabaseFactory {
 
     private val dotenv = dotenv()
 
+    private val databaseUrl =
+        System.getenv("DATABASE_URL")
+            ?: dotenv["DATABASE_URL"]
+
     fun init() {
 
         val config = HikariConfig().apply {
 
-            jdbcUrl = dotenv["DATABASE_URL"]
+            jdbcUrl = databaseUrl
 
             driverClassName = "org.postgresql.Driver"
 

@@ -3,19 +3,35 @@ package com.rashidyusubov.musicserver.utils
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
+import java.io.ByteArrayInputStream
 import java.io.FileInputStream
+import java.io.InputStream
 
 object FirebaseFactory {
 
     fun init() {
 
-        val serviceAccount = FileInputStream(
-            "firebase/firebase-adminsdk.json"
-        )
+        val firebaseConfig =
+            System.getenv("FIREBASE_CONFIG")
+
+        val credentialsStream: InputStream =
+
+            if (firebaseConfig != null) {
+
+                ByteArrayInputStream(
+                    firebaseConfig.toByteArray()
+                )
+
+            } else {
+
+                FileInputStream(
+                    "firebase/firebase-adminsdk.json"
+                )
+            }
 
         val options = FirebaseOptions.builder()
             .setCredentials(
-                GoogleCredentials.fromStream(serviceAccount)
+                GoogleCredentials.fromStream(credentialsStream)
             )
             .build()
 
