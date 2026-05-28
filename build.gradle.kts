@@ -53,4 +53,5 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.1.21")
 }
