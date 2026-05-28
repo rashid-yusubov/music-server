@@ -7,6 +7,7 @@ import com.rashidyusubov.musicserver.presentation.routes.favoritesRoutes
 import com.rashidyusubov.musicserver.presentation.routes.playlistsRoutes
 import com.rashidyusubov.musicserver.presentation.routes.tracksRoutes
 import io.ktor.server.application.*
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.plugins.swagger.*
 import io.ktor.server.routing.*
 
@@ -18,6 +19,11 @@ fun Application.configureRouting() {
             path = "swagger",
             swaggerFile = "openapi/documentation.yaml"
         )
+
+
+        staticResources("/music", "static/music")
+
+        staticResources("/images", "static/images")
 
         tracksRoutes()
 
