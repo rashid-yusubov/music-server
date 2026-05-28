@@ -8,21 +8,188 @@ info:
 servers:
   - url: http://localhost:8080
 
+tags:
+  - name: Tracks
+    description: Operations related to music tracks
+
+  - name: Artists
+    description: Operations related to artists
+
+  - name: Albums
+    description: Operations related to albums
+
+  - name: Authentication
+    description: Firebase authentication endpoints
+
+  - name: Favorites
+    description: User favorite tracks
+
+  - name: Playlists
+    description: User playlists management
+
 paths:
 
   /tracks:
 
     get:
+      tags:
+        - Tracks
+
       summary: Get all tracks
+
+      description: Returns a list of all available music tracks
 
       responses:
         '200':
-          description: List of tracks
+          description: Tracks retrieved successfully
+
+        '500':
+          description: Internal server error
 
   /tracks/{id}:
 
     get:
+      tags:
+        - Tracks
+
       summary: Get track by id
+
+      description: Returns track information by identifier
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          description: Track identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Track found successfully
+
+        '404':
+          description: Track not found
+
+        '500':
+          description: Internal server error
+
+  /tracks/search:
+
+    get:
+      tags:
+        - Tracks
+
+      summary: Search tracks by title
+
+      description: Searches tracks by title
+
+      parameters:
+        - name: query
+          in: query
+          required: true
+
+          description: Search query string
+
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Search results returned successfully
+
+        '400':
+          description: Empty search query
+
+        '500':
+          description: Internal server error
+
+  /tracks/search/artist:
+
+    get:
+      tags:
+        - Tracks
+
+      summary: Search tracks by artist
+
+      description: Searches tracks by artist name
+
+      parameters:
+        - name: artist
+          in: query
+          required: true
+
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Tracks found successfully
+
+        '400':
+          description: Invalid search query
+
+        '500':
+          description: Internal server error
+
+  /artists:
+
+    get:
+      tags:
+        - Artists
+
+      summary: Get all artists
+
+      description: Returns a list of all artists
+
+      responses:
+        '200':
+          description: Artists retrieved successfully
+
+        '500':
+          description: Internal server error
+
+  /artists/{id}:
+
+    get:
+      tags:
+        - Artists
+
+      summary: Get artist by id
+
+      description: Returns artist information by identifier
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          description: Artist identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Artist found successfully
+
+        '404':
+          description: Artist not found
+
+        '500':
+          description: Internal server error
+
+  /artists/{id}/tracks:
+
+    get:
+      tags:
+        - Artists
+
+      summary: Get artist tracks
+
+      description: Returns all tracks of selected artist
 
       parameters:
         - name: id
@@ -34,24 +201,381 @@ paths:
 
       responses:
         '200':
-          description: Track found
+          description: Artist tracks retrieved successfully
 
         '404':
-          description: Track not found
+          description: Artist not found
 
-  /tracks/search:
+        '500':
+          description: Internal server error
+
+  /artists/{id}/albums:
 
     get:
-      summary: Search tracks
+      tags:
+        - Artists
+
+      summary: Get artist albums
+
+      description: Returns albums of selected artist
 
       parameters:
-        - name: query
-          in: query
+        - name: id
+          in: path
           required: true
 
           schema:
-            type: string
+            type: integer
 
       responses:
         '200':
-          description: Search results
+          description: Artist albums retrieved successfully
+
+        '404':
+          description: Artist not found
+
+        '500':
+          description: Internal server error
+
+  /albums:
+
+    get:
+      tags:
+        - Albums
+
+      summary: Get all albums
+
+      description: Returns a list of all albums
+
+      responses:
+        '200':
+          description: Albums retrieved successfully
+
+        '500':
+          description: Internal server error
+
+  /albums/{id}:
+
+    get:
+      tags:
+        - Albums
+
+      summary: Get album by id
+
+      description: Returns album information by identifier
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          description: Album identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Album found successfully
+
+        '404':
+          description: Album not found
+
+        '500':
+          description: Internal server error
+
+  /albums/{id}/tracks:
+
+    get:
+      tags:
+        - Albums
+
+      summary: Get album tracks
+
+      description: Returns tracks from selected album
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Album tracks retrieved successfully
+
+        '404':
+          description: Album not found
+
+        '500':
+          description: Internal server error
+
+  /favorites:
+
+    get:
+      tags:
+        - Favorites
+
+      summary: Get favorite tracks
+
+      description: Returns user's favorite tracks
+
+      responses:
+        '200':
+          description: Favorites retrieved successfully
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Favorites
+
+      summary: Add track to favorites
+
+      description: Adds a track to user's favorites
+
+      responses:
+        '201':
+          description: Track added to favorites
+
+        '400':
+          description: Invalid request
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+  /favorites/{trackId}:
+
+    delete:
+      tags:
+        - Favorites
+
+      summary: Remove track from favorites
+
+      description: Removes a track from user's favorites
+
+      parameters:
+        - name: trackId
+          in: path
+          required: true
+
+          description: Track identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Track removed from favorites
+
+        '404':
+          description: Favorite track not found
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+  /playlists:
+
+    get:
+      tags:
+        - Playlists
+
+      summary: Get playlists
+
+      description: Returns user's playlists
+
+      responses:
+        '200':
+          description: Playlists retrieved successfully
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Playlists
+
+      summary: Create playlist
+
+      description: Creates a new playlist
+
+      responses:
+        '201':
+          description: Playlist created successfully
+
+        '400':
+          description: Invalid request
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+  /playlists/{id}:
+
+    get:
+      tags:
+        - Playlists
+
+      summary: Get playlist by id
+
+      description: Returns playlist information by identifier
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          description: Playlist identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Playlist found successfully
+
+        '404':
+          description: Playlist not found
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Playlists
+
+      summary: Delete playlist
+
+      description: Deletes playlist by identifier
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Playlist deleted successfully
+
+        '404':
+          description: Playlist not found
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+  /playlists/{id}/tracks:
+
+    post:
+      tags:
+        - Playlists
+
+      summary: Add track to playlist
+
+      description: Adds a track to playlist
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          description: Playlist identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Track added to playlist
+
+        '404':
+          description: Playlist not found
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+  /playlists/{playlistId}/tracks/{trackId}:
+
+    delete:
+      tags:
+        - Playlists
+
+      summary: Remove track from playlist
+
+      description: Removes track from selected playlist
+
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+
+          schema:
+            type: integer
+
+        - name: trackId
+          in: path
+          required: true
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Track removed from playlist
+
+        '404':
+          description: Playlist or track not found
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
+  /profile:
+
+    get:
+      tags:
+        - Authentication
+
+      summary: Get user profile
+
+      description: Returns authenticated user profile
+
+      responses:
+        '200':
+          description: Profile retrieved successfully
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
