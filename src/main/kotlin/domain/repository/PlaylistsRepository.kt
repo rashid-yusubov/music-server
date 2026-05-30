@@ -1,6 +1,7 @@
 package com.rashidyusubov.musicserver.domain.repository
 
 import com.rashidyusubov.musicserver.domain.model.Playlist
+import com.rashidyusubov.musicserver.domain.model.Track
 
 interface PlaylistsRepository {
 
@@ -27,4 +28,8 @@ interface PlaylistsRepository {
         playlistId: Int,
         trackId: Int
     )
+
+    suspend fun getPlaylistTracks(
+        playlistId: Int
+    ): List<Track>
 }

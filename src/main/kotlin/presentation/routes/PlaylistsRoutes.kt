@@ -160,5 +160,33 @@ fun Route.playlistsRoutes() {
                 "Track removed from playlist"
             )
         }
+
+        get("/{playlistId}/tracks") {
+
+            val firebaseUid = verifyFirebaseToken(call)
+                ?: return@get
+
+            usersRepository
+                .getUserByFirebaseUid(firebaseUid)
+                ?: return@get
+
+            val playlistId = call.parameters["playlistId"]
+                ?.toIntOrNull()
+
+            if (playlistId == null) {
+
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    "Invalid playlist id"
+                )
+
+                return@get
+            }
+
+            val tracks = playlistsRepository
+                .getPlaylistTracks(playlistId)
+
+            call.respond(tracks)
+        }
     }
 }

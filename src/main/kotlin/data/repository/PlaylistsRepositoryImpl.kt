@@ -10,6 +10,9 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import com.rashidyusubov.musicserver.data.database.tables.TracksTable
+import com.rashidyusubov.musicserver.domain.model.Track
+import org.jetbrains.exposed.sql.select
 
 class PlaylistsRepositoryImpl : PlaylistsRepository {
 
@@ -104,6 +107,35 @@ class PlaylistsRepositoryImpl : PlaylistsRepository {
                 (PlaylistTracksTable.playlistId eq playlistId) and
                         (PlaylistTracksTable.trackId eq trackId)
             }
+        }
+    }
+
+    override suspend fun getPlaylistTracks(
+        playlistId: Int
+    ): List<Track> {
+
+        return transaction {
+
+            (PlaylistTracksTable innerJoin TracksTable)
+                .select(
+                    TracksTable.columns
+                )
+                .where {
+                    PlaylistTracksTable.playlistId eq playlistId
+                }
+                .map {
+
+                    Track(
+                        id = it[TracksTable.id],
+                        title = it[TracksTable.title],
+                        artistId = it[TracksTable.artistId],
+                        albumId = it[TracksTable.albumId],
+                        duration = it[TracksTable.duration],
+                        genre = it[TracksTable.genre],
+                        audioUrl = it[TracksTable.audioUrl],
+                        coverUrl = it[TracksTable.coverUrl]
+                    )
+                }
         }
     }
 }
