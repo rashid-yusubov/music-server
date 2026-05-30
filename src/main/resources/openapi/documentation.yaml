@@ -491,6 +491,37 @@ paths:
 
   /playlists/{id}/tracks:
 
+    get:
+      tags:
+        - Playlists
+
+      summary: Get playlist tracks
+
+      description: Returns all tracks from selected playlist
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          description: Playlist identifier
+
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Playlist tracks retrieved successfully
+
+        '404':
+          description: Playlist not found
+
+        '401':
+          description: Unauthorized
+
+        '500':
+          description: Internal server error
+
     post:
       tags:
         - Playlists
